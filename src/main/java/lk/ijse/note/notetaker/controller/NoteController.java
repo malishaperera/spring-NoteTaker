@@ -1,9 +1,8 @@
 package lk.ijse.note.notetaker.controller;
 
 
-import lk.ijse.note.notetaker.bo.NoteBo;
+import lk.ijse.note.notetaker.service.NoteService;
 import lk.ijse.note.notetaker.dto.NoteDTO;
-import lk.ijse.note.notetaker.util.AppUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -20,7 +19,7 @@ import java.util.List;
 public class NoteController {
 
     @Autowired
-    private final NoteBo noteBo;
+    private final NoteService noteBo;
 
 
     //To Do CRUD Operation

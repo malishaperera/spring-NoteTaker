@@ -1,4 +1,4 @@
-package lk.ijse.note.notetaker.bo;
+package lk.ijse.note.notetaker.service;
 
 import lk.ijse.note.notetaker.dto.NoteDTO;
 import lk.ijse.note.notetaker.util.AppUtil;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public final class NoteBOIMPL implements NoteBo {
+public final class NoteServiceIMPL implements NoteService {
     @Override
     public String saveData(NoteDTO noteDTO) {
         noteDTO.setNoteId(AppUtil.createNoteID());
@@ -35,6 +35,7 @@ public final class NoteBOIMPL implements NoteBo {
         }
         return false;
     }
+
 
 
     @Override
