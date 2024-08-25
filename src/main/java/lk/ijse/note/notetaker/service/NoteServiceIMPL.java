@@ -9,6 +9,16 @@ import java.util.List;
 
 @Service
 public final class NoteServiceIMPL implements NoteService {
+    List<NoteDTO> saveNoteTemp = new ArrayList<>();
+
+    public NoteServiceIMPL() {
+        saveNoteTemp.add(new NoteDTO("NOTE 4f8a0a67-2ebc-41b2-9de6-4e9bcdba65bb", "First Note", "This is the first note","first","2024-08-25"));
+        saveNoteTemp.add(new NoteDTO("NOTE 4f8a0a68-2ebc-41b2-9de6-4e9bcdba65bb", "First Note", "This is the first note","first","2024-08-25"));
+        saveNoteTemp.add(new NoteDTO("NOTE 4f8a0a69-2ebc-41b2-9de6-4e9bcdba65bb", "First Note", "This is the first note","first","2024-08-25"));
+        saveNoteTemp.add(new NoteDTO("NOTE 4f8a0a610-2ebc-41b2-9de6-4e9bcdba65bb", "First Note", "This is the first note","first","2024-08-25"));
+
+    }
+
     @Override
     public String saveData(NoteDTO noteDTO) {
         noteDTO.setNoteId(AppUtil.createNoteID());

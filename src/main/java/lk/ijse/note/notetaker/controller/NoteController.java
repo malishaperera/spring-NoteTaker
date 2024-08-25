@@ -19,7 +19,7 @@ import java.util.List;
 public class NoteController {
 
     @Autowired
-    private final NoteService noteBo;
+    private final NoteService noteService;
 
 
     //To Do CRUD Operation
@@ -28,7 +28,7 @@ public class NoteController {
     public ResponseEntity<String> createNote(@RequestBody NoteDTO note){
 
         //Todo: Handle with BO
-        String savedNote = noteBo.saveData(note);
+        String savedNote = noteService.saveData(note);
         return ResponseEntity.ok(savedNote);
     }
 
@@ -37,7 +37,7 @@ public class NoteController {
     public List<NoteDTO> getAllNotes() {
 
         List<NoteDTO> allNotes = new ArrayList<>();
-        return noteBo.getAllNotes();
+        return noteService.getAllNotes();
     }
 
 
@@ -46,7 +46,7 @@ public class NoteController {
     public NoteDTO getNote(@PathVariable ("noteId") String noteId)  {
 
 //        NoteDTO selectedNote = noteBo.getSelectedNote(noteId);
-        return noteBo.getSelectedNote(noteId);
+        return noteService.getSelectedNote(noteId);
 
     }
 
@@ -54,7 +54,7 @@ public class NoteController {
     @PatchMapping(value = "/{noteId}",produces = MediaType.APPLICATION_JSON_VALUE)
     public void updateNote(@PathVariable("noteId") String noteId , @RequestBody NoteDTO note){
 
-        boolean updatedNote = noteBo.updateNote(noteId, note);
+        boolean updatedNote = noteService.updateNote(noteId, note);
         if (updatedNote){
             System.out.println("updatedNote:");
         }else {
@@ -67,7 +67,7 @@ public class NoteController {
     @DeleteMapping(value = "/{noteId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public void deleteNote(@PathVariable ("noteId") String noteId) {
 
-        boolean deletedNote = noteBo.deleteNote(noteId);
+        boolean deletedNote = noteService.deleteNote(noteId);
         if (deletedNote){
             System.out.println("deletedNote:");
         }else {
