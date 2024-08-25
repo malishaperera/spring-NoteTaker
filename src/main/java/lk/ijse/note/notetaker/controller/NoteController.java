@@ -45,21 +45,21 @@ public class NoteController {
     @GetMapping(value = "/{noteId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public NoteDTO getNote(@PathVariable ("noteId") String noteId)  {
 
-//        NoteDTO selectedNote = noteBo.getSelectedNote(noteId);
-        return noteService.getSelectedNote(noteId);
-
+        NoteDTO selectedNote = noteService.getSelectedNote(noteId);
+        if (selectedNote != null){
+            return noteService.getSelectedNote(noteId);
+        }else {
+            return null;
+        }
     }
 
 
     @PatchMapping(value = "/{noteId}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public void updateNote(@PathVariable("noteId") String noteId , @RequestBody NoteDTO note){
+    public ResponseEntity<String> updateNote(@PathVariable("noteId") String noteId , @RequestBody NoteDTO note){
 
-        boolean updatedNote = noteService.updateNote(noteId, note);
-        if (updatedNote){
-            System.out.println("updatedNote:");
-        }else {
-            System.out.println("Note update unsuccessful:");
-        }
+          noteService.updateNote(noteId, note);
+          return ResponseEntity.ok("updatedNote:");
+
     }
 
 
@@ -67,12 +67,7 @@ public class NoteController {
     @DeleteMapping(value = "/{noteId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public void deleteNote(@PathVariable ("noteId") String noteId) {
 
-        boolean deletedNote = noteService.deleteNote(noteId);
-        if (deletedNote){
-            System.out.println("deletedNote:");
-        }else {
-            System.out.println("Note delete unsuccessful:");
-        }
+         noteService.deleteNote(noteId);
     }
 
 
