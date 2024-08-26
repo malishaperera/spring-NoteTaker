@@ -9,18 +9,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@NoArgsConstructor
+import java.io.Serializable;
+
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
-@Entity
-@ToString
 @Table(name = "notes")
-public class NoteEntity {
+@Entity
+public class NoteEntity implements Serializable {
     @Id
     private String noteId;
     private String noteTitle;
     private String noteDesc;
     private String priorityLevel;
     private String createDate;
-
 }

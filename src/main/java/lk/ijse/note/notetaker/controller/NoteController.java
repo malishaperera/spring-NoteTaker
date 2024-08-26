@@ -21,6 +21,7 @@ public class NoteController {
 
     @Autowired
     private final NoteService noteService;
+    
 
 
     //To Do CRUD Operation
@@ -28,16 +29,15 @@ public class NoteController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> createNote(@RequestBody NoteDTO note){
 
-        //Todo: Handle with BO
-        String savedNote = noteService.saveData(note);
-        return ResponseEntity.ok(savedNote);
+        //Todo: Handle with Service
+        var saveData = noteService.saveNote(note);
+        return ResponseEntity.ok(saveData);
     }
 
 
     @GetMapping(value = "allNotes", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<NoteDTO> getAllNotes() {
 
-        List<NoteDTO> allNotes = new ArrayList<>();
         return noteService.getAllNotes();
     }
 
@@ -46,23 +46,17 @@ public class NoteController {
     @GetMapping(value = "/{noteId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public NoteDTO getNote(@PathVariable ("noteId") String noteId)  {
 
-        NoteDTO selectedNote = noteService.getSelectedNote(noteId);
-        if (selectedNote != null){
-            return noteService.getSelectedNote(noteId);
-        }else {
-            return null;
-        }
+        return noteService.getSelectedNote(noteId);
     }
 
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping(value = "/{noteId}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> updateNote(@PathVariable("noteId") String noteId , @RequestBody NoteDTO note){
+    public void updateNote(@PathVariable("noteId") String noteId , @RequestBody NoteDTO note){
 
-          noteService.updateNote(noteId, note);
-          return ResponseEntity.ok("updatedNote:");
+        noteService.updateNote(noteId, note);
 
     }
-
 
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -72,10 +66,5 @@ public class NoteController {
          noteService.deleteNote(noteId);
     }
 
-
-//    @GetMapping(value ="allNotes",produces = MediaType.APPLICATION_JSON_VALUE)
-//    public List<NoteDTO> getAllNotes(){
-//        return null;
-//    }
 
 }
