@@ -22,7 +22,6 @@ import javax.sql.DataSource;
 
 @Configuration
 @ComponentScan(basePackages = "lk.ijse.note.notetaker")
-@EnableWebMvc
 @EnableJpaRepositories(basePackages = "lk.ijse.note.notetaker")
 @EnableTransactionManagement
 public class WebAppRootConfig {
