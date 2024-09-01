@@ -1,6 +1,7 @@
 package lk.ijse.note.notetaker.config;
 
 
+import jakarta.servlet.annotation.MultipartConfig;
 import jdk.jfr.Enabled;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +16,12 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableWebMvc
 @EnableJpaRepositories(basePackages = "lk.ijse.note.notetaker")
 @EnableTransactionManagement
+//multipart home data access
+@MultipartConfig (
+        fileSizeThreshold = 1024  * 1024 * 2, //2MB
+        maxFileSize = 1024  * 1024 * 10,  //10MB
+        maxRequestSize = 1024 * 1024 * 50//50MB
+)
 public class WebAppConfig {
 
 }

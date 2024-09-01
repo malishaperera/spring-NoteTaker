@@ -2,7 +2,9 @@ package lk.ijse.note.notetaker.util;
 
 
 import lk.ijse.note.notetaker.dto.NoteDTO;
+import lk.ijse.note.notetaker.dto.UserDTO;
 import lk.ijse.note.notetaker.entity.NoteEntity;
+import lk.ijse.note.notetaker.entity.UserEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,6 +17,7 @@ public class Mapping {
     @Autowired
     private ModelMapper modelMapper;
 
+
     //matters of NoteEntity and DTO
     public NoteDTO convertToDTO(NoteEntity note) {
         return modelMapper.map(note, NoteDTO.class);
@@ -24,5 +27,15 @@ public class Mapping {
     }
     public List<NoteDTO> convertToDTO(List<NoteEntity> notes) {
         return modelMapper.map(notes, List.class);
+    }
+    //User matters mapping
+    public UserEntity convertToUserEntity(UserDTO userDTO) {
+        return modelMapper.map(userDTO, UserEntity.class);
+    }
+    public UserDTO convertToUserDTO(UserEntity userEntity) {
+        return modelMapper.map(userEntity, UserDTO.class);
+    }
+    public List<UserDTO> convertUserToDTO(List<UserEntity> userEntities) {
+        return modelMapper.map(userEntities, List.class);
     }
 }
