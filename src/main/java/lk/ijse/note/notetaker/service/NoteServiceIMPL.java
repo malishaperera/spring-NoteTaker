@@ -3,6 +3,7 @@ package lk.ijse.note.notetaker.service;
 import jakarta.servlet.annotation.WebListener;
 import lk.ijse.note.notetaker.dao.NoteDao;
 import lk.ijse.note.notetaker.dto.NoteDTO;
+import lk.ijse.note.notetaker.entity.NoteEntity;
 import lk.ijse.note.notetaker.util.AppUtil;
 import lk.ijse.note.notetaker.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +52,7 @@ public  class NoteServiceIMPL implements NoteService {
 
     @Override
     public NoteDTO getSelectedNote(String noteId) {
-        return null;
+        return mapping.convertToDTO(noteDao.getReferenceById(noteId));
 
 
     }
