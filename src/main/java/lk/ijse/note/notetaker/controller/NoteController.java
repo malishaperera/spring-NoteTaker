@@ -21,6 +21,12 @@ public class NoteController {
     @Autowired
     private final NoteService noteService;
 
+    @GetMapping("/health")
+    public String healthCheck(){
+       return "Note Taker is running";
+
+    }
+
 
 
     //To Do CRUD Operation
@@ -64,6 +70,5 @@ public class NoteController {
 
         return noteService.deleteNote(noteId) ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-
 
 }
