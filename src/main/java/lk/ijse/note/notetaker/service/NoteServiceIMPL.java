@@ -1,18 +1,14 @@
 package lk.ijse.note.notetaker.service;
 
-import jakarta.servlet.annotation.WebListener;
 import lk.ijse.note.notetaker.dao.NoteDao;
 import lk.ijse.note.notetaker.dto.NoteDTO;
-import lk.ijse.note.notetaker.entity.NoteEntity;
 import lk.ijse.note.notetaker.util.AppUtil;
 import lk.ijse.note.notetaker.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 @Service
 @Transactional
@@ -44,7 +40,13 @@ public  class NoteServiceIMPL implements NoteService {
 
 
     @Override
-    public void deleteNote(String noteId) {
+    public boolean deleteNote(String noteId) {
+//       return noteDao.deleteById(noteId);
+        if (noteDao.existsById(noteId)){
+            noteDao.deleteById(noteId);
+            return true;
+        }
+        return false;
 
     }
 

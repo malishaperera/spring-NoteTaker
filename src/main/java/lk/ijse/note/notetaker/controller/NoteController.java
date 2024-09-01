@@ -59,11 +59,11 @@ public class NoteController {
     }
 
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/{noteId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public void deleteNote(@PathVariable ("noteId") String noteId) {
+    public ResponseEntity<String> deleteNote(@PathVariable ("noteId") String noteId) {
 
-         noteService.deleteNote(noteId);
+        return noteService.deleteNote(noteId) ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
 
