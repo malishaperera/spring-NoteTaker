@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -24,5 +25,5 @@ public class UserEntity implements SuperEntity {
     @Column(columnDefinition = "LONGTEXT")
     private String profilePicture;
     @OneToMany(mappedBy = "user")
-    private List<NoteEntity> notes;
+    private List<NoteEntity> notes = new ArrayList<>();
 }
