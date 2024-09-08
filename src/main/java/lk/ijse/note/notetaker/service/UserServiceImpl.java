@@ -56,6 +56,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDTO> getAllUsers() {
-        return List.of();
+        return mapping.convertUserToDTOList(userDao.findAll());
     }
 }
