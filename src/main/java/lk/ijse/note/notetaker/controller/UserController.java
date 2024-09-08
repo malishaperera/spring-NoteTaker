@@ -2,7 +2,6 @@ package lk.ijse.note.notetaker.controller;
 
 
 import lk.ijse.note.notetaker.dto.UserDTO;
-import lk.ijse.note.notetaker.entity.NoteEntity;
 import lk.ijse.note.notetaker.service.UserService;
 import lk.ijse.note.notetaker.util.AppUtil;
 import lombok.RequiredArgsConstructor;
@@ -11,8 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -54,6 +51,10 @@ public class UserController {
     public ResponseEntity<String> deleteUser(@PathVariable("id") String userId) {
         return userService.deleteUser(userId) ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
+    }
 
+    @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserDTO getSelectedUser(@PathVariable ("id") String userId){
+        return userService.getSelectedUser(userId);
     }
 }
