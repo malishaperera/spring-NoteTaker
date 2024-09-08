@@ -3,6 +3,7 @@ package lk.ijse.note.notetaker.controller;
 
 import lk.ijse.note.notetaker.cutomObj.UserResponse;
 import lk.ijse.note.notetaker.dto.impl.UserDTO;
+import lk.ijse.note.notetaker.exception.DataPersistFailedException;
 import lk.ijse.note.notetaker.exception.UserNotFoundException;
 import lk.ijse.note.notetaker.service.UserService;
 import lk.ijse.note.notetaker.util.AppUtil;
@@ -35,23 +36,22 @@ public class UserController {
         @RequestPart("profilePicture") String profilePicture)
     {
 
-        //Handle profile picture
-        String base64ProfilePic = AppUtil.toBase64ProfilePic(profilePicture);
-
-        //build the user object
-        UserDTO builduUserDTO = new UserDTO();
-        builduUserDTO.setFirstName(firstName);
-        builduUserDTO.setLastName(lastName);
-        builduUserDTO.setEmail(email);
-        builduUserDTO.setPassword(password);
-        builduUserDTO.setProfilePicture(base64ProfilePic);
-
-
-        //send to the service layer
-        var saveStatus = userService.saveUser(builduUserDTO);
-        if (saveStatus.contains("User saved successfully")){
+        // Handle profile pic
+        try {
+            String base64ProfilePic = AppUtil.toBase64ProfilePic(profilePicture);
+            // build the user object
+            UserDTO buildUserDTO = new UserDTO();
+            buildUserDTO.setFirstName(firstName);
+            buildUserDTO.setLastName(lastName);
+            buildUserDTO.setEmail(email);
+            buildUserDTO.setPassword(password);
+            buildUserDTO.setProfilePicture(base64ProfilePic);
+            //send to the service layer
+            userService.saveUser(buildUserDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
-        }else {
+        }catch (DataPersistFailedException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 

@@ -6,6 +6,7 @@ import lk.ijse.note.notetaker.cutomObj.UserResponse;
 import lk.ijse.note.notetaker.dao.UserDao;
 import lk.ijse.note.notetaker.dto.impl.UserDTO;
 import lk.ijse.note.notetaker.entity.UserEntity;
+import lk.ijse.note.notetaker.exception.DataPersistFailedException;
 import lk.ijse.note.notetaker.exception.UserNotFoundException;
 import lk.ijse.note.notetaker.util.AppUtil;
 import lk.ijse.note.notetaker.util.Mapping;
@@ -29,15 +30,12 @@ public class UserServiceImpl implements UserService {
     private final Mapping mapping;
 
     @Override
-    public String saveUser(UserDTO userDTO) {
+    public void saveUser(UserDTO userDTO) {
         userDTO.setUserId(AppUtil.createUserId());
-        UserEntity saveUser = userDao.save(mapping.convertToUserEntity(userDTO));
-
-        if (saveUser != null && saveUser.getUserId() != null) {
-            return "User saved successfully";
-
-        }else {
-            return "Save failed";
+        UserEntity savedUser =
+                userDao.save(mapping.convertToUserEntity(userDTO));
+        if(savedUser == null && savedUser.getUserId() == null ) {
+            throw new DataPersistFailedException("Cannot data saved");
         }
     }
 
