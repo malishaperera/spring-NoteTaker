@@ -1,7 +1,7 @@
 package lk.ijse.note.notetaker.service;
 
 import lk.ijse.note.notetaker.dao.NoteDao;
-import lk.ijse.note.notetaker.dto.NoteDTO;
+import lk.ijse.note.notetaker.dto.impl.NoteDTO;
 import lk.ijse.note.notetaker.entity.NoteEntity;
 import lk.ijse.note.notetaker.util.AppUtil;
 import lk.ijse.note.notetaker.util.Mapping;

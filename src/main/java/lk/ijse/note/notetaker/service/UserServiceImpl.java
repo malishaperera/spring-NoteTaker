@@ -1,8 +1,10 @@
 package lk.ijse.note.notetaker.service;
 
 import jakarta.transaction.Transactional;
+import lk.ijse.note.notetaker.cutomObj.UserErrorResponse;
+import lk.ijse.note.notetaker.cutomObj.UserResponse;
 import lk.ijse.note.notetaker.dao.UserDao;
-import lk.ijse.note.notetaker.dto.UserDTO;
+import lk.ijse.note.notetaker.dto.impl.UserDTO;
 import lk.ijse.note.notetaker.entity.UserEntity;
 import lk.ijse.note.notetaker.exception.UserNotFoundException;
 import lk.ijse.note.notetaker.util.AppUtil;
@@ -39,6 +41,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+
     @Override
     public void updateUser(UserDTO userDTO) {
         Optional<UserEntity> tmpUser = userDao.findById(userDTO.getUserId());
@@ -55,19 +58,23 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public boolean deleteUser(String userId) {
-        if (userDao.existsById(userId)) {
-            userDao.deleteById(userId);
-            return true;
+    public void deleteUser(String userId) {
+        Optional<UserEntity> selectedUserId = userDao.findById(userId);
+        if(!selectedUserId.isPresent()) {
+            throw new UserNotFoundException("User not found");
         }else {
-            return false;
+            userDao.deleteById(userId);
         }
     }
 
     @Override
-    public UserDTO getSelectedUser(String userId) {
-//        UserEntity userEntitiesByUserId = userDao.getUserEntitiesByUserId(userId) ;
-        return mapping.convertToUserDTO(userDao.getUserEntitiesByUserId(userId));
+    public UserResponse getSelectedUser(String userId) {
+        if(userDao.existsById(userId)){
+            UserEntity userEntityByUserId = userDao.getUserEntitiesByUserId(userId);
+            return mapping.convertToUserDTO(userEntityByUserId);
+        }else {
+            return new UserErrorResponse(0,"User not found");
+        }
     }
 
     @Override

@@ -1,4 +1,4 @@
-package lk.ijse.note.notetaker.dto;
+package lk.ijse.note.notetaker.dto.impl;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,6 +1,6 @@
 package lk.ijse.note.notetaker.service;
 
-import lk.ijse.note.notetaker.dto.NoteDTO;
+import lk.ijse.note.notetaker.dto.impl.NoteDTO;
 
 import java.util.List;
 

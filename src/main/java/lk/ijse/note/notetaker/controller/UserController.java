@@ -1,8 +1,8 @@
 package lk.ijse.note.notetaker.controller;
 
 
-import lk.ijse.note.notetaker.dto.NoteDTO;
-import lk.ijse.note.notetaker.dto.UserDTO;
+import lk.ijse.note.notetaker.cutomObj.UserResponse;
+import lk.ijse.note.notetaker.dto.impl.UserDTO;
 import lk.ijse.note.notetaker.exception.UserNotFoundException;
 import lk.ijse.note.notetaker.service.UserService;
 import lk.ijse.note.notetaker.util.AppUtil;
@@ -60,12 +60,19 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable("id") String userId) {
-        return userService.deleteUser(userId) ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        try {
+            userService.deleteUser(userId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (UserNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
     }
 
     @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public UserDTO getSelectedUser(@PathVariable ("id") String userId){
+    public UserResponse getSelectedUser(@PathVariable ("id") String userId){
         return userService.getSelectedUser(userId);
     }
 
