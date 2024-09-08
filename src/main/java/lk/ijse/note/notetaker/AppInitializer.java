@@ -23,7 +23,7 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
     @Override
     protected void customizeRegistration(ServletRegistration.Dynamic registration) {
-        String tempDir = System.getProperty("java.io.tmpdir");
+        String tempDir = System.getProperty("java.io.tmpdir"); //windows operating system
         registration.setMultipartConfig(new MultipartConfigElement(tempDir));
     }
 
