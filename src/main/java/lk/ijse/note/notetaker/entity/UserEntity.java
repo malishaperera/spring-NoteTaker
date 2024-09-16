@@ -26,4 +26,5 @@ public class UserEntity implements SuperEntity {
     private String profilePicture;
     @OneToMany(mappedBy = "user")
     private List<NoteEntity> notes = new ArrayList<>();
+    
 }
