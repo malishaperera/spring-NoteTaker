@@ -15,15 +15,11 @@ public class AppUtil {
         return "USER-"+UUID.randomUUID();
     }
 
-    public static String toBase64ProfilePic(String profilePic){
-        return Base64.getEncoder().encodeToString(profilePic.getBytes()); //used to java Base64 class, and profilePic convert Base64 encode
+    public static String toBase64ProfilePic(byte[] profilePic){
+        return Base64.getEncoder().encodeToString(profilePic); //used to java Base64 class, and profilePic convert Base64 encode
 
 
     }
-
-
-
-
 
     //mapping
 }
