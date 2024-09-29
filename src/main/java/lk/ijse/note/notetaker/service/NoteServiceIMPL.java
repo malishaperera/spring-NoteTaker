@@ -3,6 +3,7 @@ package lk.ijse.note.notetaker.service;
 import lk.ijse.note.notetaker.dao.NoteDao;
 import lk.ijse.note.notetaker.dto.impl.NoteDTO;
 import lk.ijse.note.notetaker.entity.NoteEntity;
+import lk.ijse.note.notetaker.exception.DataPersistFailedException;
 import lk.ijse.note.notetaker.exception.NoteNotFound;
 import lk.ijse.note.notetaker.util.AppUtil;
 import lk.ijse.note.notetaker.util.Mapping;
@@ -28,12 +29,20 @@ public  class NoteServiceIMPL implements NoteService {
 
 
     @Override
-    public String saveNote(NoteDTO noteDTO) {
+    public void saveNote(NoteDTO noteDTO) {
         noteDTO.setNoteId(AppUtil.createNoteID());
         var noteEntity = mapping.convertToEntity(noteDTO);
-        noteDao.save(noteEntity);
-        return "Saved successfully in Service layer";
+        var saveNoted = noteDao.save(noteEntity);
+        if (saveNoted == null) {
+            throw new DataPersistFailedException("Can't save note");
+        }
+
+//        return "Saved successfully in Service layer";
     }
+
+
+
+
 
     @Override
     public void updateNote(String noteId, NoteDTO incomeNoteDTO) {
