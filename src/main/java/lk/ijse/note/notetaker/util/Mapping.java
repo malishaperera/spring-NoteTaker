@@ -29,10 +29,12 @@ public class Mapping {
     public List<NoteDTO> convertToDTO(List<NoteEntity> notes) {
         return modelMapper.map(notes, List.class);
     }
+
     //User matters mapping
     public UserEntity convertToUserEntity(UserDTO userDTO) {
         return modelMapper.map(userDTO, UserEntity.class);
     }
+
     public UserDTO convertToUserDTO(UserEntity userEntity) {
         return modelMapper.map(userEntity, UserDTO.class);
     }
