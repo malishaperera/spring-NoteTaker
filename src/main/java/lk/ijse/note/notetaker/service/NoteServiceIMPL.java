@@ -71,6 +71,7 @@ public  class NoteServiceIMPL implements NoteService {
         }
     }
 
+
     @Override
     public NoteResponse getSelectedNote(String noteId) {
         if(noteDao.existsById(noteId)){
