@@ -1,5 +1,6 @@
 package lk.ijse.note.notetaker.service;
 
+import lk.ijse.note.notetaker.cutomObj.NoteResponse;
 import lk.ijse.note.notetaker.dto.impl.NoteDTO;
 
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 public  interface NoteService  {
     void saveNote(NoteDTO noteDTO);
     void updateNote(String noteId, NoteDTO noteDTO);
-    boolean deleteNote(String noteId);
-    NoteDTO getSelectedNote(String noteId);
+    void deleteNote(String noteId);
+    NoteResponse getSelectedNote(String noteId);
     List<NoteDTO> getAllNotes();
 }

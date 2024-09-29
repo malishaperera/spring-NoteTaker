@@ -1,5 +1,7 @@
 package lk.ijse.note.notetaker.service;
 
+import lk.ijse.note.notetaker.cutomObj.NoteErrorResponse;
+import lk.ijse.note.notetaker.cutomObj.NoteResponse;
 import lk.ijse.note.notetaker.dao.NoteDao;
 import lk.ijse.note.notetaker.dto.impl.NoteDTO;
 import lk.ijse.note.notetaker.entity.NoteEntity;
@@ -60,25 +62,24 @@ public  class NoteServiceIMPL implements NoteService {
 
 
     @Override
-    public boolean deleteNote(String noteId) {
+    public void deleteNote(String noteId) {
 //       return noteDao.deleteById(noteId);
-        if (noteDao.existsById(noteId)){
+        Optional<NoteEntity> findId = noteDao.findById(noteId);
+        if (findId.isPresent()){
+            throw new NoteNotFound("Note not found");
+        }else {
             noteDao.deleteById(noteId);
-            return true;
         }
-        return false;
-
     }
-
-
 
     @Override
-    public NoteDTO getSelectedNote(String noteId) {
-        return mapping.convertToDTO(noteDao.getReferenceById(noteId));
-
-
+    public NoteResponse getSelectedNote(String noteId) {
+        if(noteDao.existsById(noteId)){
+            return mapping.convertToDTO(noteDao.getReferenceById(noteId));
+        }else {
+            return new NoteErrorResponse(0,"Note not found");
+        }
     }
-
 
     @Override
     public List<NoteDTO> getAllNotes() {

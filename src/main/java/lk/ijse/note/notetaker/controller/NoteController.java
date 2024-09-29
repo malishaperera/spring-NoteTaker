@@ -1,6 +1,7 @@
 package lk.ijse.note.notetaker.controller;
 
 
+import lk.ijse.note.notetaker.cutomObj.NoteResponse;
 import lk.ijse.note.notetaker.exception.DataPersistFailedException;
 import lk.ijse.note.notetaker.exception.NoteNotFound;
 import lk.ijse.note.notetaker.service.NoteService;
@@ -29,7 +30,6 @@ public class NoteController {
        return "Note Taker is running";
 
     }
-
 
     //To Do CRUD Operation
 
@@ -66,7 +66,7 @@ public class NoteController {
 
 
     @GetMapping(value = "/{noteId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public NoteDTO getNote(@PathVariable ("noteId") String noteId)  {
+    public NoteResponse getSelectedNote(@PathVariable ("noteId") String noteId)  {
 
         return noteService.getSelectedNote(noteId);
     }
@@ -76,7 +76,13 @@ public class NoteController {
     @PatchMapping(value = "/{noteId}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> updateNote(@PathVariable("noteId") String noteId , @RequestBody NoteDTO note){
 
+
+
         try {
+
+            if (note == null && noteId == null || note.equals("")){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
             noteService.updateNote(noteId, note);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (NoteNotFound e){
@@ -90,9 +96,17 @@ public class NoteController {
 
 //    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/{noteId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> deleteNote(@PathVariable ("noteId") String noteId) {
+    public ResponseEntity<Void> deleteNote(@PathVariable ("noteId") String noteId) {
 
-        return noteService.deleteNote(noteId) ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        try {
+            noteService.deleteNote(noteId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        }catch (NoteNotFound e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
